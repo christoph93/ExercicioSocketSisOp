@@ -10,6 +10,9 @@ class TCPServer {
 
         /* Cria socket do servidor */
         ServerSocket welcomeSocket = new ServerSocket(6790);
+        
+        FileReader fr;
+        BufferedReader br;
 
         while (true) {
 
@@ -36,10 +39,23 @@ class TCPServer {
             System.out.println(IPAddress.getHostAddress() + ":" + port + " => " + clientSentence);
 
             /* Adiciona o \n para que o cliente também possa ler usando readLine() */
+            
+                       
+            fr = new FileReader(clientSentence);
+            br = new BufferedReader(fr);
+            
+            String  line = br.readLine();
+            
+            while(line != null){
+                System.out.println(line);
+                line = br.readLine();
+                outToClient.writeBytes(line + "\n");
+            }
+            
             echo = clientSentence + '\n';
 
             /* Envia mensagem para o cliente*/
-            outToClient.writeBytes(echo);
+            //outToClient.writeBytes(echo);
 
             /* Encerra socket do cliente */
             connectionSocket.close();
