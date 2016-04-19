@@ -29,10 +29,18 @@ class TCPClient {
         outToServer.writeBytes(sentence + '\n');
 
         /* Lê mensagem de resposta do servidor */
+        
+                
+        FileWriter fw = new FileWriter(sentence + "2.txt");
+        
         echo = inFromServer.readLine();
-
-        System.out.println("FROM SERVER: " + echo);
-
+        while(echo != null){            
+            fw.write(echo + "\r\n");
+            echo = inFromServer.readLine();
+        }
+        
+        fw.close();
+        
         /* Encerra conexão */
         clientSocket.close();
 

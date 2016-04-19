@@ -40,6 +40,11 @@ class TCPServer {
 
             /* Adiciona o \n para que o cliente também possa ler usando readLine() */
             
+            File f = new File(clientSentence);
+            
+            if(!f.exists()){
+                connectionSocket.close();
+            } else{
                        
             fr = new FileReader(clientSentence);
             br = new BufferedReader(fr);
@@ -48,17 +53,19 @@ class TCPServer {
             
             while(line != null){
                 System.out.println(line);
-                line = br.readLine();
                 outToClient.writeBytes(line + "\n");
+                line = br.readLine();
+                
             }
             
+            connectionSocket.close();
             echo = clientSentence + '\n';
 
             /* Envia mensagem para o cliente*/
             //outToClient.writeBytes(echo);
 
             /* Encerra socket do cliente */
-            connectionSocket.close();
+            }
         }
     }
 }
